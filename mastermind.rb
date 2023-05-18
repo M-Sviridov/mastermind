@@ -8,17 +8,16 @@ secret_code = comp.secret_code
 
 until comp.max_guesses? || comp.correct_guess?
   comp.human_guess
-  comp.human_guesses.each do |guess|
-    puts "\n"
-    comp.reveal_code(guess)
-    puts "\n"
-  end
+  puts "\n"
+  comp.reveal_code(comp.human_code)
+  comp.find_clues
+  puts "\n"
 end
 
 if comp.max_guesses?
-  puts 'You lost! You used your 12 guesses.'
-elsif comp.correct_guess?
-  puts 'You won, you guessed the code: '
+  puts '\nYou lost! You used your 12 guesses.'
+  puts 'The correct code was: '
   comp.reveal_code(secret_code)
-  puts "\nCongratulations!"
+elsif comp.correct_guess?
+  puts "\nCongratulations! You correctly guessed the secret code."
 end
