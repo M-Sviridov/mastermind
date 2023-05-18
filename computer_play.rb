@@ -11,7 +11,7 @@ class ComputerPlay
 
   def initialize
     @total_turns = 1
-    @secret_code = random_code
+    @secret_code = [5, 5, 1, 5]
     @human_guesses = []
     @human_code = nil
   end
@@ -44,17 +44,37 @@ class ComputerPlay
     @human_code.all? { |digit| digit.between?(1, 6) } && @human_code.length == 4
   end
 
-  def find_clues
+  # this method will find the appropriate clues by first going through the human_code
+  # input and check for all correctly positionned digits, then it will loop again
+  # but this time find the incoprrectly positionned digits
+
+  def find_clues # rubocop:disable Metrics/MethodLength
     secret_code_copy = secret_code.clone
+    correct = 0
+    incorrect = 0
 
     @human_code.each_with_index do |digit, index|
       if digit == secret_code[index]
-        print clues_code 1
+        correct += 1
         secret_code_copy[index] = nil
-      elsif secret_code_copy.include?(digit)
-        print clues_code 2
+      end
+    end
+    @human_code.each do |digit|
+      if secret_code_copy.include?(digit)
+        incorrect += 1
         secret_code_copy[secret_code_copy.index(digit)] = nil
       end
+    end
+    [correct, incorrect]
+  end
+
+  def reveal_clues
+    find_clues[0].times do
+      print clues_code 1
+    end
+
+    find_clues[1].times do
+      print clues_code 2
     end
   end
 

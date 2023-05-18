@@ -10,7 +10,7 @@ until comp.max_guesses? || comp.correct_guess?
   comp.human_guess
   puts "\n"
   comp.reveal_code(comp.human_code)
-  comp.find_clues
+  comp.reveal_clues
   puts "\n"
 end
 
