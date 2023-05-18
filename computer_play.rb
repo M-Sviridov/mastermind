@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
 require './display'
+require './colorable'
 require 'pry'
 
 # class representing the case where the human is the guesser in Mastermind
 class ComputerPlay
   include Display
-  attr_reader :secret_code, :human_guesses
-  attr_accessor :human_code
+  using Colorable
+  attr_reader :secret_code, :human_guesses, :total_turns, :human_code
 
   def initialize
+    @total_turns = 1
     @secret_code = random_code
     @human_guesses = []
     @human_code = nil
@@ -20,21 +22,22 @@ class ComputerPlay
   end
 
   def reveal_code(code)
-    <<-CODE
-    #{colors_code(code[0])}#{colors_code(code[1])}#{colors_code(code[2])}#{colors_code(code[3])}
-    CODE
+    code.each do |digit|
+      print colors_code digit
+    end
   end
 
   def human_guess
     loop do
-      print 'Enter your combination of 4 digits (between 1 and 6): '
+      print "\nTurn ##{@total_turns}, enter 4 digits (between 1 and 6): "
       @human_code = gets.chomp.chars.map(&:to_i)
       if valid_guess?
         add_human_guess
+        @total_turns += 1
         return @human_code
       end
 
-      puts "\nIncorrect combination, make sure the respect the conditions."
+      puts "\nIncorrect combination, make sure the respect the conditions.".fg_color(:aurora1)
     end
   end
 
@@ -54,3 +57,6 @@ class ComputerPlay
     @human_code == secret_code
   end
 end
+
+comp = ComputerPlay.new
+binding.pry
