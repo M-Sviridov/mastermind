@@ -12,4 +12,11 @@ module Display
       6 => "\e[46m  6  \e[0m "
     }[number]
   end
+
+  def clues_code(number)
+    {
+      1 => "\e[91m\u25CF\e[0m ",
+      2 => "\e[37m\u25CB\e[0m "
+    }[number]
+  end
 end
