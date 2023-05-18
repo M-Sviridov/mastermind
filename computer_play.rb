@@ -6,10 +6,12 @@ require 'pry'
 # class representing the case where the human is the guesser in Mastermind
 class ComputerPlay
   include Display
-  attr_reader :secret, :human_code
+  attr_reader :secret_code, :human_code, :human_guesses
 
   def initialize
-    @secret = random_code
+    @secret_code = random_code
+    @human_guesses = []
+    @human_code = human_guess
   end
 
   def random_code
@@ -25,14 +27,29 @@ class ComputerPlay
   def human_guess
     loop do
       print 'Enter your combination of 4 digits (between 1 and 6): '
-      @human_code = gets.chomp.chars.map(&:to_i)
-      return human_code if valid_guess?
+      code = gets.chomp.chars.map(&:to_i)
+      if valid_guess?(code)
+        add_human_guess(code)
+        return code
+      end
 
       puts "\nIncorrect combination, make sure the respect the conditions."
     end
   end
 
-  def valid_guess?
-    human_code.all? { |digit| digit.between?(1, 6) } && human_code.length == 4
+  def valid_guess?(code)
+    code.all? { |digit| digit.between?(1, 6) } && code.length == 4
+  end
+
+  def add_human_guess(code)
+    human_guesses << code
+  end
+
+  def max_guesses?
+    human_guesses.length == 12
   end
 end
+
+comp = ComputerPlay.new
+binding.pry
+# comp.human_guess
