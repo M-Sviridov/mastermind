@@ -2,7 +2,6 @@
 
 require './display'
 require './colorable'
-require 'pry'
 
 # class representing the case where the human is the guesser in Mastermind
 class ComputerPlay
@@ -45,6 +44,20 @@ class ComputerPlay
     @human_code.all? { |digit| digit.between?(1, 6) } && @human_code.length == 4
   end
 
+  def find_clues
+    secret_code_copy = secret_code.clone
+
+    @human_code.each_with_index do |digit, index|
+      if digit == secret_code[index]
+        print clues_code 1
+        secret_code_copy[index] = nil
+      elsif secret_code_copy.include?(digit)
+        print clues_code 2
+        secret_code_copy[secret_code_copy.index(digit)] = nil
+      end
+    end
+  end
+
   def add_human_guess
     human_guesses << @human_code
   end
@@ -57,6 +70,3 @@ class ComputerPlay
     @human_code == secret_code
   end
 end
-
-comp = ComputerPlay.new
-binding.pry
