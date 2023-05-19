@@ -25,26 +25,19 @@ class HumanPlay
   def start
     until max_guesses?(human_guesses) || correct_guess?(human_code)
       human_guess
-      puts "\n"
-      reveal_code(human_code)
-      reveal_clues
-      puts "\n"
+      one_turn_text
     end
 
     if max_guesses?(human_guesses)
-      puts "\nYou lost! You used your 12 guesses."
-      puts "The correct code was:\n\n"
-      reveal_code(secret_code)
-      puts ''
+      human_lose_text
     elsif correct_guess?(human_code)
-      puts "\nCongratulations! You correctly guessed the secret code."
+      human_win_text
     end
   end
 
   def random_code
     Array.new(4) { rand(1..6) }
   end
-
 
   def human_guess
     loop do
