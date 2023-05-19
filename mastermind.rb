@@ -15,9 +15,10 @@ until comp.max_guesses? || comp.correct_guess?
 end
 
 if comp.max_guesses?
-  puts '\nYou lost! You used your 12 guesses.'
-  puts 'The correct code was: '
+  puts "\nYou lost! You used your 12 guesses."
+  puts "The correct code was:\n\n"
   comp.reveal_code(secret_code)
+  puts ''
 elsif comp.correct_guess?
   puts "\nCongratulations! You correctly guessed the secret code."
 end
