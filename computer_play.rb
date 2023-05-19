@@ -16,6 +16,26 @@ class ComputerPlay
     @human_code = nil
     @human_code_copy = []
     @secret_code_copy = []
+    start
+  end
+
+  def start
+    until max_guesses? || correct_guess?
+      human_guess
+      puts "\n"
+      reveal_code(human_code)
+      reveal_clues
+      puts "\n"
+    end
+
+    if max_guesses?
+      puts "\nYou lost! You used your 12 guesses."
+      puts "The correct code was:\n\n"
+      reveal_code(secret_code)
+      puts ''
+    elsif correct_guess?
+      puts "\nCongratulations! You correctly guessed the secret code."
+    end
   end
 
   def random_code
