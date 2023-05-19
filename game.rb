@@ -5,6 +5,7 @@ require './colorable'
 require './human_play'
 require './instructions'
 
+# class representing a full game of Mastermind when human is either creator/guessor
 class Game
   include Instructions
   include Display
