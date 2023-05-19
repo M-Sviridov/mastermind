@@ -19,4 +19,20 @@ module Display
       2 => "\e[37m\u25CB\e[0m "
     }[number]
   end
+
+  def reveal_code(code)
+    code.each do |digit|
+      print colors_code digit
+    end
+  end
+
+  def reveal_clues
+    exact_matches.times do
+      print clues_code 1
+    end
+
+    correct_numbers.times do
+      print clues_code 2
+    end
+  end
 end
