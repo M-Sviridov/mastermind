@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require './colorable'
+
 # module that displays certain information for the game
 module Display
+  using Colorable
+
   def colors_code(number)
     {
       1 => "\e[41m  1  \e[0m ",
@@ -45,12 +49,13 @@ module Display
 
   def human_win_text
     puts "\n"
-    puts 'Congratulations! You correctly guessed the secret code.'
+    puts 'Congratulations! You correctly guessed the secret code.'.fg_color(:aurora4)
   end
 
   def human_lose_text
     puts "\n"
-    puts 'You lost! You used your 12 guesses.'
+    puts 'You lost! You used your 12 guesses.'.fg_color(:aurora1)
+    puts "\n"
     puts 'The correct code was:'
     puts "\n"
     reveal_code(secret_code)
