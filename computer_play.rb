@@ -14,6 +14,8 @@ class ComputerPlay
     @secret_code = [5, 5, 1, 5]
     @human_guesses = []
     @human_code = nil
+    @human_code_copy = []
+    @secret_code_copy = []
   end
 
   def random_code
@@ -41,45 +43,49 @@ class ComputerPlay
   end
 
   def valid_guess?
-    @human_code.all? { |digit| digit.between?(1, 6) } && @human_code.length == 4
+    human_code.all? { |digit| digit.between?(1, 6) } && human_code.length == 4
   end
 
-  # this method will find the appropriate clues by first going through the human_code
-  # input and check for all correctly positionned digits, then it will loop again
-  # but this time find the incoprrectly positionned digits
-
-  def find_clues # rubocop:disable Metrics/MethodLength
-    secret_code_copy = secret_code.clone
+  def exact_matches
+    @secret_code_copy = secret_code.clone
+    @human_code_copy = human_code.clone
     correct = 0
+
+    @human_code_copy.each_with_index do |digit, index|
+      next unless digit == secret_code[index]
+
+      @secret_code_copy[index] = nil
+      @human_code_copy[index] = nil
+      correct += 1
+    end
+    correct
+  end
+
+  def correct_numbers
     incorrect = 0
 
-    @human_code.each_with_index do |digit, index|
-      if digit == secret_code[index]
-        correct += 1
-        secret_code_copy[index] = nil
-      end
+    @human_code_copy.each_with_index do |digit, index|
+      next unless @secret_code_copy.include?(digit) && !digit.nil?
+
+      @secret_code_copy[@secret_code_copy.index(digit)] = nil
+      @human_code_copy[index] = nil
+      incorrect += 1
     end
-    @human_code.each do |digit|
-      if secret_code_copy.include?(digit)
-        incorrect += 1
-        secret_code_copy[secret_code_copy.index(digit)] = nil
-      end
-    end
-    [correct, incorrect]
+    incorrect
   end
 
   def reveal_clues
-    find_clues[0].times do
+    exact_matches.times do
       print clues_code 1
     end
 
-    find_clues[1].times do
+    correct_numbers.times do
       print clues_code 2
     end
   end
 
   def add_human_guess
-    human_guesses << @human_code
+    human_guesses << human_code
   end
 
   def max_guesses?
@@ -87,6 +93,6 @@ class ComputerPlay
   end
 
   def correct_guess?
-    @human_code == secret_code
+    human_code == secret_code
   end
 end
