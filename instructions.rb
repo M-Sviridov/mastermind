@@ -49,6 +49,7 @@ module Instructions
 
       Press '1' to be the GUESSER
       Press '2' to be the CREATOR
+
     TEXT
   end
 end
