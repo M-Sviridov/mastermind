@@ -2,7 +2,7 @@
 
 require './display'
 require './colorable'
-require './computer_play'
+require './human_play'
 require './instructions'
 
 class Game
@@ -11,12 +11,12 @@ class Game
 
   def start
     puts instructions
-    puts game_option
+    game_option
   end
 
   def game_option
     option = gets.chomp.to_i
-    ComputerPlay.new if option == 1
+    HumanPlay.new if option == 1
   end
 end
 
