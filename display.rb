@@ -35,4 +35,25 @@ module Display
       print clues_code 2
     end
   end
+
+  def one_turn_text
+    puts "\n"
+    reveal_code(human_code)
+    reveal_clues
+    puts "\n"
+  end
+
+  def human_win_text
+    puts "\n"
+    puts 'Congratulations! You correctly guessed the secret code.'
+  end
+
+  def human_lose_text
+    puts "\n"
+    puts 'You lost! You used your 12 guesses.'
+    puts 'The correct code was:'
+    puts "\n"
+    reveal_code(secret_code)
+    puts ''
+  end
 end
