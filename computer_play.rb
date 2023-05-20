@@ -3,7 +3,6 @@
 require './display'
 require './colorable'
 require './game_logic'
-require 'pry'
 
 # class representing the case where the human is the creator in Mastermind
 class ComputerPlay
