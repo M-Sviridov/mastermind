@@ -31,11 +31,11 @@ module Display
   end
 
   def reveal_clues
-    exact_matches.times do
+    @exact_total.times do
       print clues_code 1
     end
 
-    correct_numbers.times do
+    @correct_total.times do
       print clues_code 2
     end
   end

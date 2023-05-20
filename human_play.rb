@@ -25,6 +25,7 @@ class HumanPlay
   def start
     until max_guesses?(human_guesses) || correct_guess?(human_code)
       human_guess
+      compare_codes(secret_code, human_code)
       one_turn_text
     end
 
