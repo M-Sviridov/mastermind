@@ -3,6 +3,7 @@
 require './display'
 require './colorable'
 require './human_play'
+require './computer_play'
 require './instructions'
 
 # class representing a full game of Mastermind when human is either creator/guessor
@@ -18,6 +19,7 @@ class Game
   def game_option
     option = gets.chomp.to_i
     HumanPlay.new if option == 1
+    ComputerPlay.new if option == 2
   end
 end
 

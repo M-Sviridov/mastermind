@@ -14,11 +14,9 @@ class HumanPlay
 
   def initialize
     @total_turns = 1
-    @secret_code = [5, 5, 1, 5]
+    @secret_code = random_code
     @human_guesses = []
     @human_code = nil
-    @human_code_copy = []
-    @secret_code_copy = []
     start
   end
 
@@ -26,7 +24,7 @@ class HumanPlay
     until max_guesses?(human_guesses) || correct_guess?(human_code)
       human_guess
       compare_codes(secret_code, human_code)
-      one_turn_text
+      one_turn_text(human_code)
     end
 
     if max_guesses?(human_guesses)
@@ -36,15 +34,11 @@ class HumanPlay
     end
   end
 
-  def random_code
-    Array.new(4) { rand(1..6) }
-  end
-
   def human_guess
     loop do
       print "\nTurn ##{@total_turns}, enter 4 digits (between 1 and 6): "
       @human_code = gets.chomp.chars.map(&:to_i)
-      if valid_guess?
+      if valid_guess?(@human_code)
         add_human_guess
         @total_turns += 1
         return @human_code
@@ -54,9 +48,9 @@ class HumanPlay
     end
   end
 
-  def valid_guess?
-    human_code.all? { |digit| digit.between?(1, 6) } && human_code.length == 4
-  end
+  # def valid_guess?(code)
+  #   code.all? { |digit| digit.between?(1, 6) } && code.length == 4
+  # end
 
   def add_human_guess
     human_guesses << human_code

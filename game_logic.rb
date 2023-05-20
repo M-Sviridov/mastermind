@@ -9,7 +9,7 @@ module GameLogic
     guess_copy = guess.clone
     @exact_total = exact_matches(master_copy, guess_copy)
     @correct_total = correct_numbers(master_copy, guess_copy)
-    # [@exact_total, @correct_total]
+    [@exact_total, @correct_total]
   end
 
   def exact_matches(master, guess)
@@ -43,6 +43,14 @@ module GameLogic
   end
 
   def correct_guess?(guess)
-    guess == secret_code
+    guess == @secret_code
+  end
+
+  def random_code
+    Array.new(4) { rand(1..6) }
+  end
+
+  def valid_guess?(code)
+    code.all? { |digit| digit.between?(1, 6) } && code.length == 4
   end
 end
