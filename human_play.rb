@@ -39,7 +39,7 @@ class HumanPlay
       print "\nTurn ##{@total_turns}, enter 4 digits (between 1 and 6): "
       @human_code = gets.chomp.chars.map(&:to_i)
       if valid_guess?(@human_code)
-        add_human_guess
+        add_guess
         @total_turns += 1
         return @human_code
       end
@@ -48,11 +48,7 @@ class HumanPlay
     end
   end
 
-  # def valid_guess?(code)
-  #   code.all? { |digit| digit.between?(1, 6) } && code.length == 4
-  # end
-
-  def add_human_guess
+  def add_guess
     human_guesses << human_code
   end
 end
